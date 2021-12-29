@@ -1,12 +1,20 @@
 import React from "react";
-import {useState} from "react";
+import './app.css'
+import ErrorIndicator from "../error-indicator/ErrorIndicator";
+import Spinner from "../spinner/Spinner";
+import {BookStoreServiceProvider} from '../bookstore-service-context/BookStoreServiceContext'
+import ErrorBoundry from "../error-boundry/ErrorBoundry";
+import withService from "../hoc/withService";
 
 export default function () {
-    const [title, setTitle] = useState('Hello')
-    return (
-    <div className='application'>
-        <h1>{title}</h1>
-        <button onClick={()=>setTitle(state=>state==='Hello' ? 'Pidor' : 'Hello')}>Click me</button>
-    </div>
-    )
+
+    return <ErrorBoundry>
+        <BookStoreServiceProvider value={'From App'}>
+            <div className='application'>
+                App
+                <ErrorIndicator/>
+                {withService(Spinner)}
+            </div>
+        </BookStoreServiceProvider>
+    </ErrorBoundry>
 }
